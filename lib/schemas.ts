@@ -1,4 +1,6 @@
-import { z } from 'zod';
+import { z } from "zod";
+
+export const localeSchema = z.enum(["ja", "en"]);
 
 export const userSchema = z.object({
   id: z.string(),
