@@ -44,11 +44,10 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <SignedIn>
-            <header>
-              <nav>
-                <SignOutButton />
+            <header className="py-2 md:px-4">
+              <nav className="flex justify-end gap-4">
                 <Link
-                  href="/"
+                  href="#"
                   className={cn(
                     buttonVariants({ variant: "outline" }),
                     "border border-slate-400",
@@ -56,6 +55,14 @@ export default function RootLayout({
                 >
                   <MdPerson size={24} />
                 </Link>
+                <div
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "border-gray-400",
+                  )}
+                >
+                  <SignOutButton />
+                </div>
               </nav>
             </header>
             {children}

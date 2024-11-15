@@ -1,12 +1,25 @@
+import { cn } from "@/lib/utils";
 import { SignInButton } from "@clerk/nextjs";
+import { buttonVariants } from "./ui/button";
 
 export function LoggedOutTop() {
   return (
-    <div className="flex justify-center py-8">
-      <header>
-        <SignInButton />
+    <div>
+      <header className="">
+        <nav className="flex justify-end py-2 md:px-4">
+          <div
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "border-gray-400",
+            )}
+          >
+            <SignInButton />
+          </div>
+        </nav>
       </header>
-      <p>ログアウトしてるよ</p>
+      <div className="flex justify-center">
+        <p>ログアウトしてるよ</p>
+      </div>
     </div>
   );
 }
