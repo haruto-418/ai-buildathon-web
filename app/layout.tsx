@@ -6,8 +6,14 @@ import {
 } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { MdPerson } from "react-icons/md";
 
+import { ClientDevelopments } from "@/components/client-developments";
 import { LoggedOutTop } from "@/components/logged-out-top";
+import { ServerDevelopments } from "@/components/server-developments";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -41,6 +47,15 @@ export default function RootLayout({
             <header>
               <nav>
                 <SignOutButton />
+                <Link
+                  href="/mypage"
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "border border-slate-400",
+                  )}
+                >
+                  <MdPerson size={24} />
+                </Link>
               </nav>
             </header>
             {children}
@@ -48,6 +63,10 @@ export default function RootLayout({
           <SignedOut>
             <LoggedOutTop />
           </SignedOut>
+          <div className="fixed bottom-0 flex flex-col gap-4">
+            <ClientDevelopments />
+            <ServerDevelopments />
+          </div>
         </body>
       </html>
     </ClerkProvider>
