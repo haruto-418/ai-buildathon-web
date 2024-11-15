@@ -48,7 +48,7 @@ export default function RootLayout({
               <nav>
                 <SignOutButton />
                 <Link
-                  href="/mypage"
+                  href="/"
                   className={cn(
                     buttonVariants({ variant: "outline" }),
                     "border border-slate-400",
