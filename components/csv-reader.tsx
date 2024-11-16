@@ -42,8 +42,7 @@ const CSVReader = (props: Props) => {
   }, [csvUrl]);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="mb-4 text-xl font-bold">CSVデータのレンダリング</h1>
+    <div className="mx-auto bg-card p-4">
       {data.length > 0 ? (
         <Table>
           {/* ヘッダー行 */}

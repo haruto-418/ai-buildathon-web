@@ -30,8 +30,7 @@ export function ClientDevelopments() {
     const _output: Output = {
       id: "",
       handoverId,
-      csvUrl:
-        "https://drive.google.com/file/d/1Q3fHyS4LQlGo7Uhf_LOgv76WyEwpFLvd/view?usp=sharing",
+      csvUrl: ``,
       createdAt: new Date(),
     };
     const output = outputSchema.parse(_output);

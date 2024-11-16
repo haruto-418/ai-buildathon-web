@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 
+import CSVReader from "@/components/csv-reader";
 import { FilesTable } from "@/components/files-table";
 import { HandoverDocumentForm } from "@/components/handover-document-form";
 import { HandoverEditForm } from "@/components/handover-etid-form";
@@ -16,6 +17,7 @@ import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
 import type { Handover, Locale } from "@/lib/types";
 import { fetchHandover } from "@/utils/interfaces/handovers/fetch";
+import { fetchOutputByHandoverId } from "@/utils/interfaces/outputs/fetch";
 import { fetchUser } from "@/utils/interfaces/users/fetch";
 
 const fetchDataSchema = z.object({
@@ -30,6 +32,7 @@ async function fetchData(args: FetchData) {
   }
 
   const handover: Handover = await fetchHandover({ handoverId });
+  const output = await fetchOutputByHandoverId({ handoverId });
   const user = await fetchUser({ userId });
 
   const { successorId } = handover;
@@ -38,7 +41,7 @@ async function fetchData(args: FetchData) {
     ? await fetchUser({ userId: successorId })
     : null;
 
-  return { handover, user, successor };
+  return { handover, user, successor, output };
 }
 
 type Props = {
@@ -51,7 +54,11 @@ export default async function Page({ params }: Props) {
 
   const { userId } = await auth();
 
-  const { handover, user, successor } = await fetchData({ handoverId, userId });
+  const { handover, user, successor, output } = await fetchData({
+    handoverId,
+    userId,
+  });
+  console.log(output);
 
   return (
     <div className="flex flex-col gap-4">
@@ -93,7 +100,8 @@ export default async function Page({ params }: Props) {
         </Accordion>
       </div>
       <div>
-        <h2></h2>
+        <h2 className="text-md font-bold">{locales[locale].handoverTable}</h2>
+        {output?.csvUrl && <CSVReader csvUrl={output.csvUrl} />}
       </div>
     </div>
   );

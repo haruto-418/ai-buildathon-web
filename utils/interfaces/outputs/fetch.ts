@@ -55,7 +55,7 @@ const fetchOutputByHandoverIdSchema = z.object({
 });
 type FetchOutputByHandoverId = z.infer<typeof fetchOutputByHandoverIdSchema>;
 export const fetchOutputByHandoverId = unstable_cache(
-  async (args: FetchOutputByHandoverId): Promise<Output[]> => {
+  async (args: FetchOutputByHandoverId): Promise<Output> => {
     const { handoverId } = fetchOutputByHandoverIdSchema.parse(args);
 
     const outputDocs = await outputsRef
@@ -68,7 +68,7 @@ export const fetchOutputByHandoverId = unstable_cache(
       }),
     );
 
-    return outputs;
+    return outputs[0];
   },
   ["outputs"],
   {
