@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 
+import { FilesTable } from "@/components/files-table";
 import { HandoverDocumentForm } from "@/components/handover-document-form";
 import { HandoverEditForm } from "@/components/handover-etid-form";
 import { SuccessorForm } from "@/components/successor-form";
@@ -46,8 +47,6 @@ export default async function Page({ params }: Props) {
 
   const { handover, user, successor } = await fetchData({ handoverId, userId });
 
-  console.log({ handover });
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
@@ -63,11 +62,20 @@ export default async function Page({ params }: Props) {
         </CardContent>
       </Card>
       <SuccessorForm handover={handover} locale={locale} />
-      <div className="flex justify-between">
-        <h2 className="text-md font-bold">
-          {locales[locale].handoverDocumentList}
-        </h2>
-        <HandoverDocumentForm locale={locale} handoverId={handoverId} />
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-md font-bold">
+            {locales[locale].handoverDocumentList}
+          </h2>
+          <HandoverDocumentForm locale={locale} handoverId={handoverId} />
+        </div>
+        <FilesTable
+          fileData={handover.handoverDocuments.map((doc) => ({
+            fileTitle: doc.title,
+            fileUrl: doc.url,
+          }))}
+          locale={locale}
+        />
       </div>
     </div>
   );

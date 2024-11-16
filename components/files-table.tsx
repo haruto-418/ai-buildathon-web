@@ -25,19 +25,19 @@ export function FilesTable(args: FilesTableProps) {
   const { fileData, locale } = filesTablePropsSchema.parse(args);
 
   return (
-    <div>
+    <div className="rounded-md bg-card p-4">
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>{locales[locale].fileTitle}</TableHead>
-            <TableHead>URL</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {fileData.map((file) => (
             <TableRow key={file.fileUrl}>
-              <TableCell>{file.fileTitle}</TableCell>
-              <TableCell>{file.fileUrl}</TableCell>
+              <TableCell>
+                <a href={file.fileUrl}>{file.fileTitle}</a>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
