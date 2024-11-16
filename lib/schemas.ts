@@ -11,9 +11,17 @@ export const userSchema = z.object({
   createdAt: z.union([z.string(), z.date()]).transform((val) => new Date(val)),
 });
 
+export const handoverDocumentSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  url: z.string(),
+  createdAt: z.union([z.string(), z.date()]).transform((val) => new Date(val)),
+});
+
 export const handoverSchema = z.object({
   id: z.string(),
   predecessorId: z.string(),
   successorId: z.string().nullable().default(null),
+  handoverDocuments: z.array(handoverDocumentSchema).default([]),
   createdAt: z.union([z.string(), z.date()]).transform((val) => new Date(val)),
 });
