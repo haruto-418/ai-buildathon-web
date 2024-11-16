@@ -1,7 +1,9 @@
-import { outputSchema } from "@/lib/schemas";
-import { Output } from "@/lib/types";
 import { unstable_cache } from "next/cache";
 import { z } from "zod";
+
+import { outputSchema } from "@/lib/schemas";
+import type { Output } from "@/lib/types";
+
 import { firestoreTimestampToDate } from "../firestore-timestamp-to-date";
 import { outputsRef } from "./server-utils";
 
