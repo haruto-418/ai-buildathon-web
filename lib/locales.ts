@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const localesSchema = z.object({
+  ifYouWantToWorkWithExistingHandover: z.string(),
   generateHandoverTable: z.string(),
   titleOfHandover: z.string(),
   handoverTable: z.string(),
@@ -80,6 +81,8 @@ const _ja: Locales = {
   display: "表示する",
   generateHandoverTable: "引き継ぎ表を生成",
   handoverTable: "引き継ぎ表",
+  ifYouWantToWorkWithExistingHandover:
+    "既存の引き継ぎを編集したい場合は、マイページより既存の引き継ぎをご選択いただけます。",
 };
 
 const _en: Locales = {
@@ -121,6 +124,8 @@ const _en: Locales = {
   display: "show all",
   generateHandoverTable: "Generate Handover Table",
   handoverTable: "Handover Table",
+  ifYouWantToWorkWithExistingHandover:
+    "If you want to edit an existing handover, you can select an existing handover from My Page.",
 };
 
 export const ja = localesSchema.parse(_ja);

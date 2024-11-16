@@ -44,13 +44,28 @@ export default function Page() {
   return (
     <div className="relative flex flex-col items-center justify-center gap-4 py-8">
       {locale !== null ? (
-        <div>
+        <div className="flex flex-col items-center gap-8">
           <Link
             href={`/${locale}/handovers`}
-            className={cn(buttonVariants({}))}
+            className={cn(
+              buttonVariants({}),
+              "rounded-full bg-teal-500 px-8 py-6 text-lg font-bold text-white",
+            )}
           >
             {locales[locale].startHandOver}
           </Link>
+          <div className="flex flex-col items-center gap-2">
+            <p>{locales[locale].ifYouWantToWorkWithExistingHandover}</p>
+            <Link
+              href={`/${locale}/mypage`}
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "border-gray-400",
+              )}
+            >
+              {locales[locale].mypage}
+            </Link>
+          </div>
         </div>
       ) : (
         <div>

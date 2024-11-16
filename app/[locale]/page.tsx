@@ -16,10 +16,15 @@ export default async function Page({ params }: Props) {
 
   return (
     <div className="flex justify-center py-8">
-      <Link href={`/${locale}/handovers`} className={cn(buttonVariants({}))}>
+      <Link
+        href={`/${locale}/handovers`}
+        className={cn(
+          buttonVariants({}),
+          "rounded-full bg-teal-500 px-8 py-6 text-lg font-bold text-white",
+        )}
+      >
         {locales[locale].startHandOver}
       </Link>
-      <p></p>
     </div>
   );
 }
