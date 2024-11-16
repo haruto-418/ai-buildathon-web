@@ -65,7 +65,7 @@ export default async function Page({ params }: Props) {
         <h2 className="text-md font-bold">
           {locales[locale].handoverDocumentList}
         </h2>
-        <HandoverDocumentForm locale={locale} />
+        <HandoverDocumentForm locale={locale} handoverId={handoverId} />
       </div>
     </div>
   );

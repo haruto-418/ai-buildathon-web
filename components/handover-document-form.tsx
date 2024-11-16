@@ -5,25 +5,22 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "./ui/button";
+import { createHandoverDocument } from "@/utils/interfaces/handover-documents/create";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 const propsSchema = z.object({
   locale: localeSchema,
+  handoverId: z.string(),
 });
 type Props = z.infer<typeof propsSchema>;
 export function HandoverDocumentForm(props: Props) {
-  const { locale } = propsSchema.parse(props);
+  const { locale, handoverId } = propsSchema.parse(props);
 
   const router = useRouter();
 
@@ -45,7 +42,7 @@ export function HandoverDocumentForm(props: Props) {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await fetch("/api/public/upload-file", {
+      const res = await fetch("/api/upload-file", {
         method: "POST",
         body: formData,
       });
@@ -58,14 +55,34 @@ export function HandoverDocumentForm(props: Props) {
       const data = await res.json();
       const fileUrl = data.file.url;
 
+      try {
+        await createHandoverDocument({
+          handoverId,
+          handoverDocument: {
+            id: "",
+            title: file.name,
+            url: fileUrl,
+            createdAt: new Date(),
+          },
+        });
+        console.info(`Handover document ${fileUrl} created`);
+      } catch (err) {
+        console.error(err);
+        toast.error("ファイルのアップロードに失敗しました");
+      }
+
       toast.success("ファイルのアップロードが完了しました");
       console.log("Uploaded file URL:", fileUrl);
+      setUploadingFile(false);
+
+      return;
     } catch (err) {
       console.error(err);
       toast.error("ファイルのアップロードに失敗しました");
-    }
 
-    setUploadingFile(false);
+      setUploadingFile(false);
+      return;
+    }
   }
 
   async function onSubmit() {
@@ -88,20 +105,17 @@ export function HandoverDocumentForm(props: Props) {
       <DialogTrigger className={cn(buttonVariants({}))}>
         {locales[locale].uploadDocument}
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle />
-          <label>{locales[locale].uploadDocument}</label>
-          <Input
-            placeholder={locales[locale].title}
-            type="file"
-            onChange={handleFileChange}
-            disabled={uploadingFile}
-          />
-          <Button type="button" onClick={onSubmit}>
-            {locales[locale].upload}
-          </Button>
-        </DialogHeader>
+      <DialogContent className="flex flex-col gap-8">
+        <DialogTitle>{locales[locale].uploadDocument}</DialogTitle>
+        <Input
+          placeholder={locales[locale].title}
+          type="file"
+          onChange={handleFileChange}
+          disabled={uploadingFile}
+        />
+        <Button type="button" onClick={onSubmit}>
+          {locales[locale].upload}
+        </Button>
       </DialogContent>
     </Dialog>
   );
