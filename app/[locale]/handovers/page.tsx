@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
+import { ClientLoader } from "@/components/client-loader";
 import { locales } from "@/lib/locales";
 import { handoverSchema, localeSchema } from "@/lib/schemas";
 import type { Handover } from "@/lib/types";
@@ -32,7 +33,7 @@ async function fetchData(args: FetchData) {
     revalidate: false,
   });
 
-  return { handoverId };
+  redirect(`/${locale}/handovers/${handoverId}`);
 }
 
 type Props = {
@@ -44,7 +45,7 @@ export default async function Page({ params }: Props) {
 
   const { userId } = await auth();
 
-  const { handoverId } = await fetchData({ userId, locale });
+  await fetchData({ userId, locale });
 
-  redirect(`/${locale}/handovers/${handoverId}`);
+  return <ClientLoader />;
 }
