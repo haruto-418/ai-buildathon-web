@@ -69,10 +69,10 @@ export function SuccessorForm(props: Props) {
           name="email"
           render={({ field }) => (
             <FormItem className="col-span-3">
-              <FormLabel>{locales[locale].email}</FormLabel>
+              <FormLabel>{locales[locale].successorEmail}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={`${locales[locale].email}...`}
+                  placeholder={`${locales[locale].successorEmail}...`}
                   type="email"
                   {...field}
                 />
