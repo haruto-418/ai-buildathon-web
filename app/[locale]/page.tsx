@@ -15,7 +15,7 @@ export default async function Page({ params }: Props) {
   const locale = localeSchema.parse(_locale);
 
   return (
-    <div className="flex justify-center py-8">
+    <div className="flex flex-col items-center justify-center gap-8 py-8">
       <Link
         href={`/${locale}/handovers`}
         className={cn(
@@ -25,6 +25,18 @@ export default async function Page({ params }: Props) {
       >
         {locales[locale].startHandOver}
       </Link>
+      <div className="flex flex-col items-center gap-2">
+        <p>{locales[locale].ifYouWantToWorkWithExistingHandover}</p>
+        <Link
+          href={`/${locale}/mypage`}
+          className={cn(
+            buttonVariants({ variant: "outline" }),
+            "border-gray-400",
+          )}
+        >
+          {locales[locale].mypage}
+        </Link>
+      </div>
     </div>
   );
 }
