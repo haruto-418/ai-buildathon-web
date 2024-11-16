@@ -6,13 +6,17 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { createHandoverDocument } from "@/utils/interfaces/handover-documents/create";
-import { DialogTitle } from "@radix-ui/react-dialog";
 
 const propsSchema = z.object({
   locale: localeSchema,

@@ -26,3 +26,16 @@ export const handoverSchema = z.object({
   handoverDocuments: z.array(handoverDocumentSchema).default([]),
   createdAt: z.union([z.string(), z.date()]).transform((val) => new Date(val)),
 });
+
+export const outputSchema = z.object({
+  id: z.string(),
+  handoverId: z.string(),
+  csvUrl: z.string().nullable().default(null),
+  createdAt: z.union([z.string(), z.date()]).transform((val) => new Date(val)),
+});
+
+export const qAndASchema = z.object({
+  question: z.string(),
+  answer: z.string().nullable().default(null),
+  createdAt: z.union([z.string(), z.date()]).transform((val) => new Date(val)),
+});
