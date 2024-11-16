@@ -1,12 +1,13 @@
 import { cn } from "@/lib/utils";
 import { SignInButton } from "@clerk/nextjs";
+import { ServiceDescription } from "./service-description";
 import { buttonVariants } from "./ui/button";
 
 export function LoggedOutTop() {
   return (
     <div>
       <header className="">
-        <nav className="flex justify-end py-2 md:px-4">
+        <nav className="flex justify-end px-2 py-2 md:px-4">
           <div
             className={cn(
               buttonVariants({ variant: "outline" }),
@@ -18,7 +19,7 @@ export function LoggedOutTop() {
         </nav>
       </header>
       <div className="flex justify-center">
-        <p>ログアウトしてるよ</p>
+        <ServiceDescription />
       </div>
     </div>
   );
