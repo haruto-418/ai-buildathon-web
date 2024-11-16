@@ -3,28 +3,39 @@ import { z } from "zod";
 
 import type { Handover, HandoverDocument } from "@/lib/types";
 
+import { handoverDocumentSchema, handoverSchema } from "@/lib/schemas";
 import { firestoreTimestampToDate } from "../firestore-timestamp-to-date";
+import { fetchHandoverDocumentsByHandoverId } from "../handover-documents/fetch";
 import { handoversRef } from "./server-utils";
 
 function parseFirestoreHandoverIntoHandover({
   docId,
   data,
-  handoverDocuments,
+  handoverDocuments: _handoverDocuments,
 }: {
   docId: string;
   data: FirebaseFirestore.DocumentData;
-  handoverDocuments: FirebaseFirestore.DocumentData[]; // サブコレクションのデータ
+  handoverDocuments: HandoverDocument[];
 }): Handover {
-  return {
+  const handoverDocuments: HandoverDocument[] = _handoverDocuments.map(
+    (doc) => {
+      const handoverDocument: HandoverDocument = {
+        id: doc.id,
+        ...(doc as Omit<HandoverDocument, "id">),
+      };
+
+      return handoverDocumentSchema.parse(handoverDocument);
+    },
+  );
+
+  const handover: Handover = {
     id: docId,
     ...(data as Omit<Handover, "id" | "handoverDocuments">),
     createdAt: firestoreTimestampToDate(data.createdAt),
-    handoverDocuments: (handoverDocuments || []).map((doc) => ({
-      id: doc.id,
-      ...(doc as Omit<HandoverDocument, "id">),
-      createdAt: firestoreTimestampToDate(doc.createdAt),
-    })),
+    handoverDocuments,
   };
+
+  return handoverSchema.parse(handover);
 }
 
 // ----------------- fetch handover -----------------
@@ -46,13 +57,9 @@ export const fetchHandover = unstable_cache(
     }
 
     // サブコレクションを取得
-    const handoverDocumentsSnapshot = await handoverDocRef
-      .collection("handoverDocuments")
-      .get();
-    const handoverDocuments = handoverDocumentsSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const handoverDocuments = await fetchHandoverDocumentsByHandoverId({
+      handoverId,
+    });
 
     return parseFirestoreHandoverIntoHandover({
       docId: handoverDoc.id,
@@ -81,14 +88,20 @@ export const fetchHandoversByPredecessorId = unstable_cache(
     const handoversSnapshot = await handoversRef
       .where("predecessorId", "==", predecessorId)
       .get();
-    const handovers = handoversSnapshot.docs.map((doc) => {
-      const handover = doc.data() as FirebaseFirestore.DocumentData;
-      return parseFirestoreHandoverIntoHandover({
-        docId: doc.id,
-        data: handover,
-        handoverDocuments: [],
-      });
-    });
+
+    const handovers = await Promise.all(
+      handoversSnapshot.docs.map(async (doc) => {
+        const handover = doc.data() as FirebaseFirestore.DocumentData;
+        const handoverDocuments = await fetchHandoverDocumentsByHandoverId({
+          handoverId: doc.id,
+        });
+        return parseFirestoreHandoverIntoHandover({
+          docId: doc.id,
+          data: handover,
+          handoverDocuments,
+        });
+      }),
+    );
 
     return handovers;
   },

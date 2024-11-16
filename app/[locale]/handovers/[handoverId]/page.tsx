@@ -46,6 +46,8 @@ export default async function Page({ params }: Props) {
 
   const { handover, user, successor } = await fetchData({ handoverId, userId });
 
+  console.log({ handover });
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
