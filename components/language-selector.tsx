@@ -38,6 +38,9 @@ export function LanguageSelector(props: Props) {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
+            localStorage.removeItem("locale");
+            localStorage.setItem("locale", "ja");
+
             redirect("/ja");
           }}
         >
@@ -45,6 +48,9 @@ export function LanguageSelector(props: Props) {
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
+            localStorage.removeItem("locale");
+            localStorage.setItem("locale", "en");
+
             redirect("/en");
           }}
         >
