@@ -92,7 +92,9 @@ export default async function Page({ params }: Props) {
           </AccordionItem>
         </Accordion>
       </div>
-      <div></div>
+      <div>
+        <h2></h2>
+      </div>
     </div>
   );
 }
