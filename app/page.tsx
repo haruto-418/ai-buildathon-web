@@ -4,11 +4,12 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
 
-import { Button } from "@/components/ui/button";
-import { en, ja } from "@/lib/locales";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { en, ja, locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
 import type { Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function Page() {
   const [locale, setLocale] = useState<Locale | null>();
@@ -43,7 +44,14 @@ export default function Page() {
   return (
     <div className="relative flex flex-col items-center justify-center gap-4 py-8">
       {locale !== null ? (
-        <div></div>
+        <div>
+          <Link
+            href={`/${locale}/handovers`}
+            className={cn(buttonVariants({}))}
+          >
+            {locales[locale].startHandOver}
+          </Link>
+        </div>
       ) : (
         <div>
           <div className="flex flex-col">

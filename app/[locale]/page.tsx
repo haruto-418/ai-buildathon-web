@@ -1,9 +1,10 @@
+import Link from "next/link";
+
 import { buttonVariants } from "@/components/ui/button";
 import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
-import { Locale } from "@/lib/types";
+import type { Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
