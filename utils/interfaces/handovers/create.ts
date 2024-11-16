@@ -9,7 +9,7 @@ import { handoversRef } from "./server-utils";
 
 const createHandoverSchema = z.object({
   handover: handoverSchema,
-  revalidate: z.boolean().optional().nullable().default(false),
+  revalidate: z.boolean().optional().nullable().default(true),
 });
 type CreateHandover = z.infer<typeof createHandoverSchema>;
 
