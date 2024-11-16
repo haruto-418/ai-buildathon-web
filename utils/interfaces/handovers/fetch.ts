@@ -34,7 +34,7 @@ const fetchHandoverSchema = z.object({
 type FetchHandover = z.infer<typeof fetchHandoverSchema>;
 
 export const fetchHandover = unstable_cache(
-  async (args: FetchHandover): Promise<Handover> => {
+  async (args: FetchHandover): Promise<Handover | null> => {
     const { handoverId } = fetchHandoverSchema.parse(args);
 
     const handoverDocRef = handoversRef.doc(handoverId);
@@ -42,7 +42,7 @@ export const fetchHandover = unstable_cache(
     // メインのドキュメントを取得
     const handoverDoc = await handoverDocRef.get();
     if (!handoverDoc.exists) {
-      throw new Error(`Handover not found: ${handoverId}`);
+      return null;
     }
 
     // サブコレクションを取得

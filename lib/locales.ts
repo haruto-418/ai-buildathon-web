@@ -5,6 +5,7 @@ export const localesSchema = z.object({
   welcome: z.string(),
   startHandOver: z.string(),
   successor: z.string(),
+  fileTitle: z.string(),
 });
 export type Locales = z.infer<typeof localesSchema>;
 
@@ -13,6 +14,7 @@ const _ja: Locales = {
   startHandOver: "引き継ぎを開始",
   welcome: "ようこそ！",
   successor: "後任",
+  fileTitle: "ファイル名",
 };
 
 const _en: Locales = {
@@ -20,6 +22,7 @@ const _en: Locales = {
   welcome: "Welcome!",
   startHandOver: "Start hand over",
   successor: "Successor",
+  fileTitle: "File Title",
 };
 
 export const ja = localesSchema.parse(_ja);

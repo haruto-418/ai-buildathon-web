@@ -9,20 +9,31 @@ import { handoversRef } from "./server-utils";
 
 const createHandoverSchema = z.object({
   handover: handoverSchema,
+  revalidate: z.boolean().optional().nullable().default(false),
 });
 type CreateHandover = z.infer<typeof createHandoverSchema>;
 
 export async function createHandover(args: CreateHandover) {
-  const { handover } = createHandoverSchema.parse(args);
+  const { handover, revalidate } = createHandoverSchema.parse(args);
 
-  const handoverDocRef = handoversRef.doc();
+  let handoverId = handover.id;
+  let creatingHandover = handover;
+  if (handoverId === "") {
+    const handoverDocRef = handoversRef.doc();
+    handoverId = handoverDocRef.id;
+    creatingHandover = {
+      ...handover,
+      id: handoverId,
+    };
+  } else {
+    handoverId = handover.id;
+  }
+
   try {
     // サブコレクション以外のデータを Firestore に保存
-    const { handoverDocuments, ...handoverData } = handover;
-    await handoverDocRef.set({
-      ...handoverData,
-      id: handoverDocRef.id,
-    });
+    const { handoverDocuments, ...handoverData } = creatingHandover;
+    const handoverDocRef = handoversRef.doc(handoverId);
+    await handoverDocRef.set({ ...handoverData });
 
     // サブコレクションのデータを Firestore に保存
     if (handoverDocuments && handoverDocuments.length > 0) {
@@ -40,7 +51,9 @@ export async function createHandover(args: CreateHandover) {
     throw new Error("Failed to create handover");
   }
 
-  revalidateTag("handovers");
+  if (revalidate) {
+    revalidateTag("handovers");
+  }
 
-  return handoverDocRef.id;
+  return handoverId;
 }
