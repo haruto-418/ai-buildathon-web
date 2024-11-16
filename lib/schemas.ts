@@ -10,3 +10,10 @@ export const userSchema = z.object({
   imageUrl: z.string().nullable().default(null),
   createdAt: z.union([z.string(), z.date()]).transform((val) => new Date(val)),
 });
+
+export const handoverSchema = z.object({
+  id: z.string(),
+  predecessorId: z.string(),
+  successorId: z.string().nullable().default(null),
+  createdAt: z.union([z.string(), z.date()]).transform((val) => new Date(val)),
+});
