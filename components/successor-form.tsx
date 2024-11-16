@@ -62,7 +62,7 @@ export function SuccessorForm(props: Props) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid grid-cols-4 items-center gap-4 rounded-lg rounded-md border border-gray-200 p-4"
+        className="grid grid-cols-4 items-center gap-4 rounded-lg rounded-md border border-gray-200 bg-card p-4"
       >
         <FormField
           control={form.control}
