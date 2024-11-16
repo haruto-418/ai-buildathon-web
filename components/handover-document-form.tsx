@@ -93,7 +93,9 @@ export function HandoverDocumentForm(props: Props) {
             onChange={handleFileChange}
             disabled={uploadingFile}
           />
-          <Button type="submit">{locales[locale].upload}</Button>
+          <Button type="button" onClick={onSubmit}>
+            {locales[locale].upload}
+          </Button>
         </DialogHeader>
       </DialogContent>
     </Dialog>
