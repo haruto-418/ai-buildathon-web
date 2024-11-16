@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 
+import { HandoverDocumentForm } from "@/components/handover-document-form";
 import { HandoverEditForm } from "@/components/handover-etid-form";
 import { SuccessorForm } from "@/components/successor-form";
 import { Card, CardContent } from "@/components/ui/card";
@@ -60,7 +61,12 @@ export default async function Page({ params }: Props) {
         </CardContent>
       </Card>
       <SuccessorForm handover={handover} locale={locale} />
-      <p>{handover?.id}</p>
+      <div className="flex justify-between">
+        <h2 className="text-md font-bold">
+          {locales[locale].handoverDocumentList}
+        </h2>
+        <HandoverDocumentForm locale={locale} />
+      </div>
     </div>
   );
 }

@@ -28,6 +28,9 @@ export const localesSchema = z.object({
   title: z.string(),
   unset: z.string(),
   save: z.string(),
+  upload: z.string(),
+  uploadDocument: z.string(),
+  handoverDocumentList: z.string(),
 });
 export type Locales = z.infer<typeof localesSchema>;
 
@@ -60,6 +63,9 @@ const _ja: Locales = {
   unset: "未設定",
   edit: "編集",
   save: "保存",
+  upload: "アップロード",
+  uploadDocument: "ドキュメントをアップロード",
+  handoverDocumentList: "引き継ぎドキュメント一覧",
 };
 
 const _en: Locales = {
@@ -90,7 +96,10 @@ const _en: Locales = {
   title: "Title",
   unset: "Unset",
   edit: "Edit",
+  upload: "Upload",
   save: "Save",
+  uploadDocument: "Upload Document",
+  handoverDocumentList: "Handover Document List",
 };
 
 export const ja = localesSchema.parse(_ja);
