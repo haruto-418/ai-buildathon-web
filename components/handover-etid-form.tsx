@@ -19,6 +19,7 @@ import { locales } from "@/lib/locales";
 import { handoverSchema, localeSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { updateHandover } from "@/utils/interfaces/handovers/update";
+import { MdEdit } from "react-icons/md";
 import { Button, buttonVariants } from "./ui/button";
 import {
   Form,
@@ -36,10 +37,11 @@ const formSchema = z.object({
 const propsSchema = z.object({
   handover: handoverSchema,
   locale: localeSchema,
+  className: z.string().optional(),
 });
 type Props = z.infer<typeof propsSchema>;
 export function HandoverEditForm(props: Props) {
-  const { handover, locale } = propsSchema.parse(props);
+  const { handover, locale, className } = propsSchema.parse(props);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -70,7 +72,15 @@ export function HandoverEditForm(props: Props) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className={cn(buttonVariants({}))}>
+      <DialogTrigger
+        className={cn(
+          buttonVariants({ variant: "ghost" }),
+          "border border-gray-500",
+          "flex items-center gap-2",
+          className,
+        )}
+      >
+        <MdEdit size={24} className="text-black" />
         {locales[locale].edit}
       </DialogTrigger>
       <DialogContent>

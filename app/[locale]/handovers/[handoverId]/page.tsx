@@ -61,10 +61,14 @@ export default async function Page({ params }: Props) {
   });
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-lg font-bold">{`${locales[locale].titleOfHandover}: ${handover.title}`}</h1>
-        <HandoverEditForm handover={handover} locale={locale} />
+    <div className="flex flex-col gap-10 md:gap-8">
+      <div className="flex flex-col items-center justify-between gap-2 md:flex-row md:gap-0">
+        <h1 className="text-2xl font-bold">{`${locales[locale].titleOfHandover}: ${handover.title}`}</h1>
+        <HandoverEditForm
+          handover={handover}
+          locale={locale}
+          className="w-4/6 md:w-fit"
+        />
       </div>
       <Card>
         <CardContent className="p-4">
@@ -76,7 +80,7 @@ export default async function Page({ params }: Props) {
       </Card>
       <SuccessorForm handover={handover} locale={locale} />
       <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col justify-between gap-2 md:flex-row md:items-center md:gap-0">
           <h2 className="text-md font-bold">
             {locales[locale].handoverDocumentList}
           </h2>

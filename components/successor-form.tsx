@@ -3,10 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { locales } from "@/lib/locales";
 import { handoverSchema, localeSchema } from "@/lib/schemas";
+import { cn } from "@/lib/utils";
 import { updateHandoverSuccessorIdByEmail } from "@/utils/interfaces/handovers/update";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { BsPlus } from "react-icons/bs";
 import { toast } from "sonner";
 import { z } from "zod";
 import {
@@ -62,7 +64,7 @@ export function SuccessorForm(props: Props) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid grid-cols-4 items-center gap-4 rounded-lg rounded-md border border-gray-200 bg-card p-4"
+        className="flex flex-col items-center gap-4 rounded-md border border-gray-200 bg-card p-4 md:grid md:grid-cols-4"
       >
         <FormField
           control={form.control}
@@ -84,7 +86,18 @@ export function SuccessorForm(props: Props) {
             </FormItem>
           )}
         />
-        <Button type="submit">{locales[locale].add}</Button>
+        <Button
+          type="submit"
+          variant={"ghost"}
+          className={cn(
+            "border border-gray-500",
+            "flex items-center gap-2",
+            "w-full",
+          )}
+        >
+          <BsPlus size={24} className="font-bold text-black" />
+          {locales[locale].add}
+        </Button>
       </form>
     </Form>
   );

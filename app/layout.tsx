@@ -50,7 +50,7 @@ export default function RootLayout({
           )}
         >
           <SignedIn>
-            <header className="py-2 md:px-4">
+            <header className="px-2 py-2 md:px-4">
               <nav className="flex items-center justify-between">
                 <div>
                   <Link href="/">TOP</Link>
@@ -69,7 +69,14 @@ export default function RootLayout({
                 </div>
               </nav>
             </header>
-            <div className={cn("mx-auto md:w-11/12")}>{children}</div>
+            <div
+              className={cn(
+                "mx-auto px-4 py-4 md:w-11/12 md:px-0 md:py-8",
+                "mb-16",
+              )}
+            >
+              {children}
+            </div>
           </SignedIn>
           <SignedOut>
             <LoggedOutTop />

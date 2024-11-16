@@ -107,7 +107,13 @@ export function HandoverDocumentForm(props: Props) {
   }
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className={cn(buttonVariants({}))}>
+      <DialogTrigger
+        className={cn(
+          buttonVariants({ variant: "ghost" }),
+          "border border-gray-500",
+          "flex items-center gap-2",
+        )}
+      >
         {locales[locale].uploadDocument}
       </DialogTrigger>
       <DialogContent className="flex flex-col gap-8">
