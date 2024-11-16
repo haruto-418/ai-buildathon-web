@@ -5,6 +5,12 @@ import { FilesTable } from "@/components/files-table";
 import { HandoverDocumentForm } from "@/components/handover-document-form";
 import { HandoverEditForm } from "@/components/handover-etid-form";
 import { SuccessorForm } from "@/components/successor-form";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
@@ -69,14 +75,24 @@ export default async function Page({ params }: Props) {
           </h2>
           <HandoverDocumentForm locale={locale} handoverId={handoverId} />
         </div>
-        <FilesTable
-          fileData={handover.handoverDocuments.map((doc) => ({
-            fileTitle: doc.title,
-            fileUrl: doc.url,
-          }))}
-          locale={locale}
-        />
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="py-0">
+              {locales[locale].display}
+            </AccordionTrigger>
+            <AccordionContent>
+              <FilesTable
+                fileData={handover.handoverDocuments.map((doc) => ({
+                  fileTitle: doc.title,
+                  fileUrl: doc.url,
+                }))}
+                locale={locale}
+              />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
+      <div></div>
     </div>
   );
 }

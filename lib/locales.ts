@@ -34,6 +34,7 @@ export const localesSchema = z.object({
   uploadDocument: z.string(),
   handoverDocumentList: z.string(),
   successorEmail: z.string(),
+  display: z.string(),
 });
 export type Locales = z.infer<typeof localesSchema>;
 
@@ -72,6 +73,7 @@ const _ja: Locales = {
   uploadDocument: "ドキュメントをアップロード",
   handoverDocumentList: "引き継ぎドキュメント一覧",
   successorEmail: "後任者のメールアドレス",
+  display: "表示する",
 };
 
 const _en: Locales = {
@@ -109,6 +111,7 @@ const _en: Locales = {
   uploadDocument: "Upload Document",
   successorEmail: "Successor's email",
   handoverDocumentList: "Handover Document List",
+  display: "show all",
 };
 
 export const ja = localesSchema.parse(_ja);
