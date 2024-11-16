@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { outputSchema } from "@/lib/schemas";
 import { Output } from "@/lib/types";
+import { createOutput } from "@/utils/interfaces/outputs/create";
 import { usePathname } from "next/navigation";
 
 export function ClientDevelopments() {
@@ -34,13 +35,22 @@ export function ClientDevelopments() {
       createdAt: new Date(),
     };
     const output = outputSchema.parse(_output);
+
+    try {
+      await createOutput({ output });
+    } catch (err) {
+      console.error(`Failed to create output: ${err}`);
+      throw new Error(`Failed to create output: ${err}`);
+    }
   }
 
   return (
     <div className="flex flex-col gap-4">
       <Button variant={"ghost"}>seeding</Button>
       {handoverId && (
-        <Button variant={"ghost"}>generate demo output: {handoverId}</Button>
+        <Button variant={"ghost"} onClick={generateDemoOutput}>
+          generate demo output: {handoverId}
+        </Button>
       )}
     </div>
   );
