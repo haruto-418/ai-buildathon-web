@@ -1,14 +1,14 @@
 "use client";
 
 import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+import { RotatingLines } from "react-loader-spinner";
 
 import { Button } from "@/components/ui/button";
 import { en, ja } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
 import type { Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { RotatingLines } from "react-loader-spinner";
 
 export default function Page() {
   const [locale, setLocale] = useState<Locale | null>();
