@@ -20,6 +20,7 @@ export const localesSchema = z.object({
     save: z.string(),
   }),
   errorMessages: z.object({
+    default: z.string(),
     handoverNotFound: z.string(),
     userNotFound: z.string(),
     addSuccessorError: z.string(),
@@ -54,6 +55,7 @@ const _ja: Locales = {
     save: "保存しました",
   },
   errorMessages: {
+    default: "エラーが発生しました",
     handoverNotFound: "引き継ぎが見つかりません",
     userNotFound: "ユーザーが見つかりません",
     addSuccessorError: "後任の追加に失敗しました",
@@ -90,6 +92,7 @@ const _en: Locales = {
     save: "Saved successfully",
   },
   errorMessages: {
+    default: "An error occurred",
     handoverNotFound: "Handover not found",
     userNotFound: "User not found",
     addSuccessorError: "Failed to add successor",

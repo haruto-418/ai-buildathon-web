@@ -27,14 +27,27 @@ export function HandoverDocumentForm(props: Props) {
   const [open, setOpen] = useState<boolean>(false);
 
   const [uploadingFile, setUploadingFile] = useState<boolean>(false);
+  const [file, setFile] = useState<File | null>(null);
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    setUploadingFile(true);
 
     const file = e.target.files?.[0];
     if (!file) {
       toast.error("ファイルが選択されていません");
+      return;
+    }
+
+    setFile(file);
+  }
+
+  async function onSubmit() {
+    if (!file) {
+      toast.error(locales[locale].errorMessages.fileNotSelected);
+      return;
+    }
+    if (uploadingFile) {
+      toast.error(locales[locale].errorMessages.default);
       return;
     }
 
@@ -65,39 +78,27 @@ export function HandoverDocumentForm(props: Props) {
             createdAt: new Date(),
           },
         });
+
         console.info(`Handover document ${fileUrl} created`);
       } catch (err) {
         console.error(err);
-        toast.error("ファイルのアップロードに失敗しました");
+        toast.error(`${locales[locale].errorMessages.saveError}`);
       }
 
-      toast.success("ファイルのアップロードが完了しました");
+      toast.success(`${locales[locale].successMessages.save}`);
+      router.refresh();
+      setOpen(false);
+
       console.log("Uploaded file URL:", fileUrl);
       setUploadingFile(false);
 
       return;
     } catch (err) {
       console.error(err);
-      toast.error("ファイルのアップロードに失敗しました");
+      toast.error(`${locales[locale].errorMessages.saveError}`);
 
       setUploadingFile(false);
       return;
-    }
-  }
-
-  async function onSubmit() {
-    if (!uploadingFile) {
-      toast.error(locales[locale].errorMessages.fileNotSelected);
-      return;
-    }
-
-    try {
-      toast.success(`${locales[locale].successMessages.save}`);
-      router.refresh();
-      setOpen(false);
-    } catch (err) {
-      console.error(err);
-      toast.error(`${locales[locale].errorMessages.saveError}`);
     }
   }
   return (
@@ -113,7 +114,7 @@ export function HandoverDocumentForm(props: Props) {
           onChange={handleFileChange}
           disabled={uploadingFile}
         />
-        <Button type="button" onClick={onSubmit}>
+        <Button type="button" onClick={onSubmit} disabled={uploadingFile}>
           {locales[locale].upload}
         </Button>
       </DialogContent>
