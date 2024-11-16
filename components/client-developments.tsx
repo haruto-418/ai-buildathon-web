@@ -7,11 +7,11 @@ import { createOutput } from "@/utils/interfaces/outputs/create";
 import { usePathname } from "next/navigation";
 
 export function ClientDevelopments() {
+  const pathname = usePathname();
+
   if (process.env.NODE_ENV !== "development") {
     return null;
   }
-
-  const pathname = usePathname();
 
   const handoverIdMatch = pathname.match(/\/handovers\/([^/]+)/);
   let handoverId: string | null = null;

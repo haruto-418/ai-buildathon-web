@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import CSVReader from "@/components/csv-reader";
 import { FilesTable } from "@/components/files-table";
+import { GenerateHandoverTableButton } from "@/components/generate-handover-table-button";
 import { HandoverDocumentForm } from "@/components/handover-document-form";
 import { HandoverEditForm } from "@/components/handover-etid-form";
 import { SuccessorForm } from "@/components/successor-form";
@@ -58,12 +59,11 @@ export default async function Page({ params }: Props) {
     handoverId,
     userId,
   });
-  console.log(output);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-bold">{handover.title}</h1>
+        <h1 className="text-lg font-bold">{`${locales[locale].titleOfHandover}: ${handover.title}`}</h1>
         <HandoverEditForm handover={handover} locale={locale} />
       </div>
       <Card>
@@ -101,7 +101,17 @@ export default async function Page({ params }: Props) {
       </div>
       <div>
         <h2 className="text-md font-bold">{locales[locale].handoverTable}</h2>
-        {output?.csvUrl && <CSVReader csvUrl={output.csvUrl} />}
+        {output?.csvUrl ? (
+          <CSVReader csvUrl={output.csvUrl} />
+        ) : (
+          <div className="flex justify-center bg-gray-50 py-8">
+            <GenerateHandoverTableButton
+              handoverId={handoverId}
+              locale={locale}
+              clasName="font-bold bg-teal-500 text-white rounded-full text-lg px-8 py-6"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

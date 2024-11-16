@@ -30,7 +30,7 @@ const CSVReader = (props: Props) => {
         Papa.parse(csvText, {
           header: true, // ヘッダー行を認識
           skipEmptyLines: true, // 空行をスキップ
-          // @ts-ignore
+          // @ts-expect-error ヘッダー行がある場合は、データは配列ではなくオブジェクトとして返される
           complete: (results) => setData(results.data),
         });
       } catch (error) {

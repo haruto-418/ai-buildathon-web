@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 export const localesSchema = z.object({
+  generateHandoverTable: z.string(),
+  titleOfHandover: z.string(),
   handoverTable: z.string(),
   selectYourLanguage: z.string(),
   welcome: z.string(),
@@ -40,6 +42,7 @@ export const localesSchema = z.object({
 export type Locales = z.infer<typeof localesSchema>;
 
 const _ja: Locales = {
+  titleOfHandover: "引き継ぎタイトル",
   selectYourLanguage: "言語を選択してください",
   startHandOver: "引き継ぎを開始",
   welcome: "ようこそ！",
@@ -75,10 +78,12 @@ const _ja: Locales = {
   handoverDocumentList: "引き継ぎドキュメント一覧",
   successorEmail: "後任者のメールアドレス",
   display: "表示する",
+  generateHandoverTable: "引き継ぎ表を生成",
   handoverTable: "引き継ぎ表",
 };
 
 const _en: Locales = {
+  titleOfHandover: "Title of Handover",
   selectYourLanguage: "Select your language",
   welcome: "Welcome!",
   startHandOver: "Start hand over",
@@ -114,6 +119,7 @@ const _en: Locales = {
   successorEmail: "Successor's email",
   handoverDocumentList: "Handover Document List",
   display: "show all",
+  generateHandoverTable: "Generate Handover Table",
   handoverTable: "Handover Table",
 };
 
