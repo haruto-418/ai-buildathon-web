@@ -1,8 +1,13 @@
 import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 
-import type { Handover } from "@/lib/types";
+import { SuccessorForm } from "@/components/successor-form";
+import { Card, CardContent } from "@/components/ui/card";
+import { locales } from "@/lib/locales";
+import { localeSchema } from "@/lib/schemas";
+import type { Handover, Locale } from "@/lib/types";
 import { fetchHandover } from "@/utils/interfaces/handovers/fetch";
+import { fetchUser } from "@/utils/interfaces/users/fetch";
 
 const fetchDataSchema = z.object({
   handoverId: z.string(),
@@ -15,30 +20,43 @@ async function fetchData(args: FetchData) {
     throw new Error("User not found");
   }
 
-  const handover: Handover | null = await fetchHandover({ handoverId });
+  const handover: Handover = await fetchHandover({ handoverId });
+  const user = await fetchUser({ userId });
 
-  return { handover };
+  const { successorId } = handover;
+
+  const successor = successorId
+    ? await fetchUser({ userId: successorId })
+    : null;
+
+  return { handover, user, successor };
 }
 
 type Props = {
-  params: Promise<{ handoverId: string; locale: string }>;
+  params: Promise<{ handoverId: string; locale: Locale }>;
 };
 
 export default async function Page({ params }: Props) {
-  const { handoverId, locale } = await params;
+  const { handoverId, locale: _locale } = await params;
+  const locale = localeSchema.parse(_locale);
 
   const { userId } = await auth();
 
-  const { handover } = await fetchData({ handoverId, userId });
-
-  console.log(handover);
+  const { handover, user, successor } = await fetchData({ handoverId, userId });
 
   return (
-    <div>
-      <h1></h1>
-      <div></div>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-lg font-bold">{locales[locale].handoverPage}</h1>
+      <Card>
+        <CardContent className="p-4">
+          <p>{`${locales[locale].predecessor}: ${user.firstName} ${user.lastName}`}</p>
+          <p>{`${locales[locale].successor}: ${
+            successor ? `${successor.firstName} ${successor.lastName}` : ""
+          }`}</p>
+        </CardContent>
+      </Card>
+      <SuccessorForm handover={handover} locale={locale} />
       <p>{handover?.id}</p>
-      <p>{locale}</p>
     </div>
   );
 }

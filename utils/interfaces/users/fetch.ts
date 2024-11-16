@@ -1,10 +1,10 @@
-import { z } from 'zod';
-import { unstable_cache } from 'next/cache';
+import { unstable_cache } from "next/cache";
+import { z } from "zod";
 
-import type { User } from '@/lib/types';
-import { firestoreTimestampToDate } from '../firestore-timestamp-to-date';
-import { userSchema } from '@/lib/schemas';
-import { usersColRef } from './server-utils';
+import { userSchema } from "@/lib/schemas";
+import type { User } from "@/lib/types";
+import { firestoreTimestampToDate } from "../firestore-timestamp-to-date";
+import { usersColRef } from "./server-utils";
 
 function parseFirestoreUserIntoUser({
   docId,
@@ -15,7 +15,7 @@ function parseFirestoreUserIntoUser({
 }): User {
   const user: User = {
     id: docId,
-    ...(data as Omit<User, 'id'>),
+    ...(data as Omit<User, "id">),
     createdAt: firestoreTimestampToDate(data.createdAt),
   };
 
@@ -41,9 +41,35 @@ export const fetchUser = unstable_cache(
       data: userDoc.data() as FirebaseFirestore.DocumentData,
     });
   },
-  ['users'],
+  ["users"],
   {
     revalidate: false,
-    tags: ['users'],
-  }
+    tags: ["users"],
+  },
+);
+
+// ----------------- fetch user by email -----------------
+const fetchUserByEmailSchema = z.object({
+  email: z.string(),
+});
+type FetchUserByEmail = z.infer<typeof fetchUserByEmailSchema>;
+export const fetchUserByEmail = unstable_cache(
+  async (args: FetchUserByEmail): Promise<User> => {
+    const { email } = fetchUserByEmailSchema.parse(args);
+
+    const userDoc = await usersColRef.where("email", "==", email).get();
+    if (userDoc.empty) {
+      throw new Error(`User not found: ${email}`);
+    }
+
+    return parseFirestoreUserIntoUser({
+      docId: userDoc.docs[0].id,
+      data: userDoc.docs[0].data() as FirebaseFirestore.DocumentData,
+    });
+  },
+  ["users"],
+  {
+    revalidate: false,
+    tags: ["users"],
+  },
 );

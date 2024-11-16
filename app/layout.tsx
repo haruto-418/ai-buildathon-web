@@ -14,6 +14,7 @@ import { ServerDevelopments } from "@/components/server-developments";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -74,6 +75,7 @@ export default function RootLayout({
             <ClientDevelopments />
             <ServerDevelopments />
           </div>
+          <Toaster position="top-center" richColors />
         </body>
       </html>
     </ClerkProvider>
