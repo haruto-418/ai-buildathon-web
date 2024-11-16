@@ -1,7 +1,9 @@
-import { buttonVariants } from "@/components/ui/button";
+"use client";
+
+import { Button } from "@/components/ui/button";
 import { en, ja } from "@/lib/locales";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function Page() {
   return (
@@ -11,24 +13,26 @@ export default function Page() {
         <p className="text-lg font-bold">{en.selectYourLanguage}</p>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <Link
-          href="/ja"
-          className={cn(
-            buttonVariants({ variant: "outline" }),
-            "w-full border-gray-400",
-          )}
+        <Button
+          variant={"outline"}
+          className={cn("w-full border-gray-400")}
+          onClick={() => {
+            localStorage.setItem("locale", "ja");
+            redirect("/ja");
+          }}
         >
           日本語
-        </Link>
-        <Link
-          href="/en"
-          className={cn(
-            buttonVariants({ variant: "outline" }),
-            "w-full border-gray-400",
-          )}
+        </Button>
+        <Button
+          variant={"outline"}
+          className={cn("w-full border-gray-400")}
+          onClick={() => {
+            localStorage.setItem("locale", "en");
+            redirect("/en");
+          }}
         >
           English
-        </Link>
+        </Button>
       </div>
     </div>
   );

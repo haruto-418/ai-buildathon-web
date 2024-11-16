@@ -48,7 +48,7 @@ export default function RootLayout({
             <header className="py-2 md:px-4">
               <nav className="flex justify-end gap-4">
                 <Link
-                  href="#"
+                  href="/mypage"
                   className={cn(
                     buttonVariants({ variant: "outline" }),
                     "border border-slate-400",
