@@ -4,7 +4,6 @@ import { localeSchema } from "@/lib/schemas";
 import { Locale } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -16,10 +15,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <div className="flex justify-center py-8">
-      <Link
-        href={`/${locale}/handovers/${uuidv4()}`}
-        className={cn(buttonVariants({}))}
-      >
+      <Link href={`/${locale}/handovers`} className={cn(buttonVariants({}))}>
         {locales[locale].startHandOver}
       </Link>
       <p></p>

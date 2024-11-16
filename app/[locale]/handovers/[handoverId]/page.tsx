@@ -1,9 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 
-import { handoverSchema } from "@/lib/schemas";
 import type { Handover } from "@/lib/types";
-import { createHandover } from "@/utils/interfaces/handovers/create";
 import { fetchHandover } from "@/utils/interfaces/handovers/fetch";
 
 const fetchDataSchema = z.object({
@@ -17,25 +15,7 @@ async function fetchData(args: FetchData) {
     throw new Error("User not found");
   }
 
-  let handover: Handover | null = await fetchHandover({ handoverId });
-  if (handover === null) {
-    // 作る
-    const _creatingHandover: Partial<Handover> = {
-      id: handoverId,
-      predecessorId: userId,
-      handoverDocuments: [],
-      createdAt: new Date(),
-    };
-    const creatingHandover = handoverSchema.parse(_creatingHandover);
-
-    const _handoverId = await createHandover({
-      handover: creatingHandover,
-      revalidate: false,
-    });
-
-    // 再取得
-    handover = await fetchHandover({ handoverId: _handoverId });
-  }
+  const handover: Handover | null = await fetchHandover({ handoverId });
 
   return { handover };
 }
@@ -49,13 +29,15 @@ export default async function Page({ params }: Props) {
 
   const { userId } = await auth();
 
-  const {} = await fetchData({ handoverId, userId });
+  const { handover } = await fetchData({ handoverId, userId });
+
+  console.log(handover);
 
   return (
     <div>
       <h1></h1>
       <div></div>
-      <p>{handoverId}</p>
+      <p>{handover?.id}</p>
       <p>{locale}</p>
     </div>
   );
