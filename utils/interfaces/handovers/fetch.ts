@@ -66,3 +66,67 @@ export const fetchHandover = unstable_cache(
     tags: ["handovers"],
   },
 );
+
+// ----------------- fetch handovers by predecessor id -----------------
+const fetchHandoversByPredecessorIdSchema = z.object({
+  predecessorId: z.string(),
+});
+type FetchHandoversByPredecessorId = z.infer<
+  typeof fetchHandoversByPredecessorIdSchema
+>;
+export const fetchHandoversByPredecessorId = unstable_cache(
+  async (args: FetchHandoversByPredecessorId): Promise<Handover[]> => {
+    const { predecessorId } = fetchHandoversByPredecessorIdSchema.parse(args);
+
+    const handoversSnapshot = await handoversRef
+      .where("predecessorId", "==", predecessorId)
+      .get();
+    const handovers = handoversSnapshot.docs.map((doc) => {
+      const handover = doc.data() as FirebaseFirestore.DocumentData;
+      return parseFirestoreHandoverIntoHandover({
+        docId: doc.id,
+        data: handover,
+        handoverDocuments: [],
+      });
+    });
+
+    return handovers;
+  },
+  ["handovers"],
+  {
+    revalidate: false,
+    tags: ["handovers"],
+  },
+);
+
+// ----------------- fetch handovers by successor id -----------------
+const fetchHandoversBySuccessorIdSchema = z.object({
+  successorId: z.string(),
+});
+type FetchHandoversBySuccessorId = z.infer<
+  typeof fetchHandoversBySuccessorIdSchema
+>;
+export const fetchHandoversBySuccessorId = unstable_cache(
+  async (args: FetchHandoversBySuccessorId): Promise<Handover[]> => {
+    const { successorId } = fetchHandoversBySuccessorIdSchema.parse(args);
+
+    const handoversSnapshot = await handoversRef
+      .where("successorId", "==", successorId)
+      .get();
+    const handovers = handoversSnapshot.docs.map((doc) => {
+      const handover = doc.data() as FirebaseFirestore.DocumentData;
+      return parseFirestoreHandoverIntoHandover({
+        docId: doc.id,
+        data: handover,
+        handoverDocuments: [],
+      });
+    });
+
+    return handovers;
+  },
+  ["handovers"],
+  {
+    revalidate: false,
+    tags: ["handovers"],
+  },
+);

@@ -20,6 +20,7 @@ export const handoverDocumentSchema = z.object({
 
 export const handoverSchema = z.object({
   id: z.string(),
+  title: z.string().nullable().default(null),
   predecessorId: z.string(),
   successorId: z.string().nullable().default(null),
   handoverDocuments: z.array(handoverDocumentSchema).default([]),

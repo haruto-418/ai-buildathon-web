@@ -11,6 +11,9 @@ export const localesSchema = z.object({
   email: z.string(),
   emailInputDescription: z.string(),
   add: z.string(),
+  mypage: z.string(),
+  successorHandoevrs: z.string(),
+  predecessorHandovers: z.string(),
   successMessages: z.object({
     add: z.string(),
   }),
@@ -19,6 +22,8 @@ export const localesSchema = z.object({
     userNotFound: z.string(),
     addSuccessorError: z.string(),
   }),
+  title: z.string(),
+  unset: z.string(),
 });
 export type Locales = z.infer<typeof localesSchema>;
 
@@ -34,6 +39,7 @@ const _ja: Locales = {
   emailInputDescription:
     "ユーザー登録に使用したGoogleアカウントのgmailを入力してください",
   add: "追加",
+  mypage: "マイページ",
   successMessages: {
     add: "追加しました",
   },
@@ -42,6 +48,10 @@ const _ja: Locales = {
     userNotFound: "ユーザーが見つかりません",
     addSuccessorError: "後任の追加に失敗しました",
   },
+  successorHandoevrs: "後任者としての引き継ぎ",
+  predecessorHandovers: "前任者としての引き継ぎ",
+  title: "タイトル",
+  unset: "未設定",
 };
 
 const _en: Locales = {
@@ -56,6 +66,7 @@ const _en: Locales = {
   emailInputDescription:
     "Enter the gmail address of the Google account you used for user registration",
   add: "Add",
+  mypage: "My Page",
   successMessages: {
     add: "Added successfully",
   },
@@ -64,6 +75,10 @@ const _en: Locales = {
     userNotFound: "User not found",
     addSuccessorError: "Failed to add successor",
   },
+  successorHandoevrs: "Handovers as a successor",
+  predecessorHandovers: "Handovers as a predecessor",
+  title: "Title",
+  unset: "Unset",
 };
 
 export const ja = localesSchema.parse(_ja);

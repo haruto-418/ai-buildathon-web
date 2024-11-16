@@ -1,15 +1,11 @@
 "use client";
 
 import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { localeSchema } from "@/lib/schemas";
-import type { Locale } from "@/lib/types";
 
 export default function Page() {
-  const [localeInLocalStorage, setLocaleInLocalStorage] =
-    useState<Locale | null>(null);
-
   // 初期値を localStorage から読み込む
   useEffect(() => {
     const value = localStorage.getItem("locale");
@@ -18,7 +14,7 @@ export default function Page() {
 
     if (value) {
       if (success) {
-        setLocaleInLocalStorage(locale);
+        redirect(`/${locale}/mypage`);
       } else {
         localStorage.removeItem("locale");
         redirect("/");
@@ -28,5 +24,5 @@ export default function Page() {
     }
   }, []);
 
-  return <div>{localeInLocalStorage}</div>;
+  return null;
 }
