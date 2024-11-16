@@ -51,16 +51,21 @@ export default function RootLayout({
         >
           <SignedIn>
             <header className="py-2 md:px-4">
-              <nav className="flex justify-end gap-4">
-                <LanguageSelector locale={"en"} />
-                <Link
-                  href="/mypage"
-                  className={cn(buttonVariants({ variant: "outline" }))}
-                >
-                  <MdPerson size={24} />
-                </Link>
-                <div className={cn(buttonVariants({ variant: "outline" }))}>
-                  <SignOutButton />
+              <nav className="flex items-center justify-between">
+                <div>
+                  <Link href="/">TOP</Link>
+                </div>
+                <div className="flex justify-end gap-4">
+                  <LanguageSelector locale={"en"} />
+                  <Link
+                    href="/mypage"
+                    className={cn(buttonVariants({ variant: "outline" }))}
+                  >
+                    <MdPerson size={24} />
+                  </Link>
+                  <div className={cn(buttonVariants({ variant: "outline" }))}>
+                    <SignOutButton />
+                  </div>
                 </div>
               </nav>
             </header>
