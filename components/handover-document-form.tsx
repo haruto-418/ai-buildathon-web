@@ -69,6 +69,11 @@ export function HandoverDocumentForm(props: Props) {
   }
 
   async function onSubmit() {
+    if (!uploadingFile) {
+      toast.error(locales[locale].errorMessages.fileNotSelected);
+      return;
+    }
+
     try {
       toast.success(`${locales[locale].successMessages.save}`);
       router.refresh();
