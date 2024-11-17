@@ -27,10 +27,8 @@ export function GenerateHandoverTableButton(props: Props) {
     setSubmitting(true);
 
     if (process.env.NODE_ENV !== "development") {
-      alert(
-        "temporarily disabled because of the Timeout Error(limited by vercel). In local environment, it works fine! / vercelのタイムアウトエラーです。ローカル環境では問題なく動作します！",
-      );
-      // return;
+      // 5秒まつ
+      await new Promise((resolve) => setTimeout(resolve, 5000));
     }
     redirect(`/${locale}/handovers/${handoverId}/phase-1`);
 
