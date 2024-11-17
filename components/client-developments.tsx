@@ -30,7 +30,7 @@ export function ClientDevelopments() {
     const _output: Output = {
       id: "",
       handoverId,
-      csvUrl: ``,
+      handoverTableString: ``,
       createdAt: new Date(),
     };
     const output = outputSchema.parse(_output);
