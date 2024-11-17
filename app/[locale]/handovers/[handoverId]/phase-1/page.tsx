@@ -1,6 +1,7 @@
 import CSVReader from "@/components/csv-reader";
 import { Questions } from "@/components/questions";
 import { demo1Json, questionsJson } from "@/lib/data";
+import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
 import { fetchOutputByHandoverId } from "@/utils/interfaces/outputs/fetch";
 import { parseJsonIntoCsv } from "@/utils/parse-json-into-csv";
@@ -26,12 +27,18 @@ export default async function Page({ params }: Props) {
 
   return (
     <div className="flex flex-col gap-8">
-      <CSVReader data={csvData} />
-      <Questions
-        questionsFromServer={questionsJson.questions}
-        locale={locale}
-        handoverId={handoverId}
-      />
+      <div>
+        <h2 className="font-bold">{locales[locale].handoverTable}</h2>
+        <CSVReader data={csvData} />
+      </div>
+      <div>
+        <h2 className="font-bold">{locales[locale].question}</h2>
+        <Questions
+          questionsFromServer={questionsJson.questions}
+          locale={locale}
+          handoverId={handoverId}
+        />
+      </div>
     </div>
   );
 }
