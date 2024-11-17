@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { z } from "zod";
 
+import { ConnectSlackButton } from "@/components/connect-slack-button";
 import { FilesTable } from "@/components/files-table";
 import { GenerateHandoverTableButton } from "@/components/generate-handover-table-button";
 import { HandoverDocumentForm } from "@/components/handover-document-form";
@@ -77,7 +78,10 @@ export default async function Page({ params }: Props) {
           <h2 className="text-md font-bold">
             {locales[locale].handoverDocumentList}
           </h2>
-          <HandoverDocumentForm locale={locale} handoverId={handoverId} />
+          <div className="flex items-center gap-2">
+            <HandoverDocumentForm locale={locale} handoverId={handoverId} />
+            <ConnectSlackButton />
+          </div>
         </div>
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">

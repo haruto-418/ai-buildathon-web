@@ -5,7 +5,13 @@ import { Button } from "./ui/button";
 
 export function ConnectSlackButton() {
   return (
-    <Button>
+    <Button
+      variant={"outline"}
+      className="border border-gray-500 bg-transparent"
+      onClick={() => {
+        alert("Under development / 実装中です");
+      }}
+    >
       <BsSlack />
     </Button>
   );
