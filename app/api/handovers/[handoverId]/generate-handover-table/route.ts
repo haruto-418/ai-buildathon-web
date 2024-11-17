@@ -1,0 +1,120 @@
+import { VertexAI } from "@google-cloud/vertexai";
+import { NextResponse } from "next/server";
+
+import { generateHandoverTablePrompt } from "@/utils/interfaces/generate-handover-table-prompt";
+
+const vertexAi = new VertexAI({
+  project: "ai-buildathon-2024-actual",
+  location: "us-central1",
+});
+
+function formatRequestBody(prompt: string) {
+  const format = {
+    contents: [
+      {
+        role: "user",
+        parts: [
+          {
+            text: prompt,
+          },
+        ],
+      },
+    ],
+    generationConfig: {
+      temperature: 1,
+      maxOutputTokens: 8192,
+      topP: 0.95,
+      seed: 0,
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: "OBJECT",
+        properties: {
+          Table: {
+            type: "ARRAY",
+            items: {
+              type: "OBJECT",
+              properties: {
+                columnname: { type: "STRING" },
+                value: { type: "STRING" },
+              },
+              required: ["columnname", "value"],
+            },
+          },
+        },
+        required: ["Table"],
+      },
+    },
+    safetySettings: [
+      { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "OFF" },
+      { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "OFF" },
+      { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "OFF" },
+      { category: "HARM_CATEGORY_HARASSMENT", threshold: "OFF" },
+    ],
+  };
+
+  return format;
+}
+
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ handoverId: string }> },
+) {
+  const { handoverId } = await params;
+
+  const model = "gemini-1.5-pro-002";
+
+  // Instantiate the models
+  const generativeModel = vertexAi.preview.getGenerativeModel({
+    model: model,
+    generationConfig: {
+      maxOutputTokens: 8192,
+      temperature: 1,
+      topP: 0.95,
+    },
+    safetySettings: [
+      {
+        category: "HARM_CATEGORY_HATE_SPEECH" as any,
+        threshold: "OFF" as any,
+      },
+      {
+        category: "HARM_CATEGORY_DANGEROUS_CONTENT" as any,
+        threshold: "OFF" as any,
+      },
+      {
+        category: "HARM_CATEGORY_SEXUALLY_EXPLICIT" as any,
+        threshold: "OFF" as any,
+      },
+      {
+        category: "HARM_CATEGORY_HARASSMENT" as any,
+        threshold: "OFF" as any,
+      },
+    ],
+  });
+
+  const requestBody = await request.json();
+  const { customersJson, document } = requestBody;
+
+  const prompt = generateHandoverTablePrompt({
+    customersJson,
+    document,
+  });
+
+  const formattedRequestBody = formatRequestBody(prompt);
+
+  const req = {
+    ...formattedRequestBody,
+  };
+
+  try {
+    const response = await generativeModel.generateContent(req as any);
+    console.log(response);
+
+    return NextResponse.json(response);
+  } catch (error) {
+    console.error("Error generating content:", error);
+    return NextResponse.json(
+      { error: "Failed to generate content" },
+      { status: 500 },
+    );
+  }
+}

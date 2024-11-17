@@ -18,6 +18,25 @@ export function GenerateHandoverTableButton(props: Props) {
 
   async function onClickButton() {
     console.log("Generate handover table, handoverId:", handoverId);
+    const res = await fetch(
+      `/api/handovers/${handoverId}/generate-handover-table`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          customersJson: "",
+          document: "",
+        }),
+      },
+    );
+    if (!res.ok) {
+      console.error("Failed to generate handover table", res.statusText);
+      return;
+    }
+
+    const data = await res.json();
+    console.log({ data });
+
+    console.log("Handover table generated successfully");
 
     redirect(`/${locale}/handovers/${handoverId}/phase-1`);
   }
