@@ -58,12 +58,7 @@ function formatRequestBody(prompt: string) {
   return format;
 }
 
-export async function POST(
-  request: Request,
-  { params }: { params: Promise<{ handoverId: string }> },
-) {
-  const { handoverId } = await params;
-
+export async function POST(request: Request) {
   const model = "gemini-1.5-pro-002";
 
   // Instantiate the models

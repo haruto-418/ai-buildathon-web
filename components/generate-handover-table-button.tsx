@@ -26,6 +26,8 @@ export function GenerateHandoverTableButton(props: Props) {
   async function onClickButton() {
     setSubmitting(true);
 
+    alert("");
+
     console.log("Generate handover table, handoverId:", handoverId);
     const res = await fetch(
       `/api/handovers/${handoverId}/generate-handover-table`,
