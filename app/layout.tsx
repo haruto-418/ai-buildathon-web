@@ -72,7 +72,7 @@ export default function RootLayout({
             <div
               className={cn(
                 "mx-auto px-4 py-4 md:w-11/12 md:px-0 md:py-8",
-                "mb-16",
+                "mb-48",
               )}
             >
               {children}
