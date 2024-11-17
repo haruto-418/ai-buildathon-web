@@ -1,5 +1,6 @@
 import CSVReader from "@/components/csv-reader";
 import { Questions } from "@/components/questions";
+import { UpdateTableButton } from "@/components/update-table-button";
 import { demo1Json, questionsJson } from "@/lib/data";
 import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
@@ -23,7 +24,6 @@ export default async function Page({ params }: Props) {
   console.log({ output });
 
   const csvData = parseJsonIntoCsv({ json: JSON.stringify(demo1Json) });
-  console.log({ csvData });
 
   return (
     <div className="flex flex-col gap-8">
@@ -39,6 +39,7 @@ export default async function Page({ params }: Props) {
           handoverId={handoverId}
         />
       </div>
+      <UpdateTableButton handoverId={handoverId} locale={locale} />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const localesSchema = z.object({
+  updateTableBasedOnAnswers: z.string(),
   confirmBack: z.string(),
   back: z.string(),
   answer: z.string(),
@@ -48,6 +49,7 @@ export const localesSchema = z.object({
 export type Locales = z.infer<typeof localesSchema>;
 
 const _ja: Locales = {
+  updateTableBasedOnAnswers: "回答に基づいて表を更新(精度の向上)",
   confirmBack: "戻ってもよろしいですか？",
   back: "戻る",
   answer: "回答",
@@ -96,6 +98,7 @@ const _ja: Locales = {
 };
 
 const _en: Locales = {
+  updateTableBasedOnAnswers: "Update table based on answers (improve accuracy)",
   confirmBack: "Are you sure you want to go back?",
   back: "Back",
   answer: "Answer",

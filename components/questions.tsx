@@ -1,7 +1,8 @@
-import { locales } from "@/lib/locales";
-import { localeSchema, questionFromServerSchema } from "@/lib/schemas";
 import { MdCheckCircle } from "react-icons/md";
 import { z } from "zod";
+
+import { locales } from "@/lib/locales";
+import { localeSchema, questionFromServerSchema } from "@/lib/schemas";
 import { QuestionAnswerForm } from "./question-answer-form";
 import {
   Table,
