@@ -28,7 +28,7 @@ export default async function HandoverLayout({ children, params }: Props) {
   const { handoverId, locale: _locale } = await params;
   const locale = localeSchema.parse(_locale);
 
-  const { handover, output } = await fetchData({ handoverId });
+  const { handover } = await fetchData({ handoverId });
 
   return (
     <div className="flex flex-col gap-10 md:gap-8">
