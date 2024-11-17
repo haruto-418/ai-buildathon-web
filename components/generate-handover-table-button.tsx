@@ -3,6 +3,7 @@
 import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { Button } from "./ui/button";
 
@@ -17,6 +18,8 @@ export function GenerateHandoverTableButton(props: Props) {
 
   async function onClickButton() {
     console.log("Generate handover table, handoverId:", handoverId);
+
+    redirect(`/${locale}/handovers/${handoverId}/phase-1`);
   }
 
   return (
