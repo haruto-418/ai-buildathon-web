@@ -1,10 +1,7 @@
 import { GenerateContentResult, VertexAI } from "@google-cloud/vertexai";
 import { NextResponse } from "next/server";
 
-import { outputSchema } from "@/lib/schemas";
-import type { Output } from "@/lib/types";
 import { generateHandoverTablePrompt } from "@/utils/interfaces/generate-handover-table-prompt";
-import { createOutput } from "@/utils/interfaces/outputs/create";
 
 const vertexAi = new VertexAI({
   project: "ai-buildathon-2024-actual",
@@ -129,16 +126,16 @@ export async function POST(
       );
     }
 
-    const _output: Partial<Output> = {
-      id: "",
-      handoverId,
-      handoverTableString: text[0],
-      createdAt: new Date(),
-    };
-    const output = outputSchema.parse(_output);
-    await createOutput({
-      output,
-    });
+    // const _output: Partial<Output> = {
+    //   id: "",
+    //   handoverId,
+    //   handoverTableString: text[0],
+    //   createdAt: new Date(),
+    // };
+    // const output = outputSchema.parse(_output);
+    // await createOutput({
+    //   output,
+    // });
 
     console.log("Content generated successfully");
 

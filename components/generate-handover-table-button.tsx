@@ -6,8 +6,10 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { sampleDoc } from "@/lib/data";
 import { locales } from "@/lib/locales";
-import { localeSchema } from "@/lib/schemas";
+import { localeSchema, outputSchema } from "@/lib/schemas";
+import { Output } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { createOutput } from "@/utils/interfaces/outputs/create";
 import { useState } from "react";
 
 const propsSchema = z.object({
@@ -42,8 +44,22 @@ export function GenerateHandoverTableButton(props: Props) {
       return;
     }
 
-    const data = await res.json();
-    console.log({ data });
+    const { data } = await res.json();
+    const _output: Partial<Output> = {
+      id: "",
+      handoverId,
+      handoverTableString: data,
+      createdAt: new Date(),
+    };
+    const output = outputSchema.parse(_output);
+    try {
+      await createOutput({
+        output,
+      });
+    } catch (err) {
+      console.error(`Failed to create output: ${err}`);
+      throw new Error(`Failed to create output: ${err}`);
+    }
 
     console.log("Handover table generated successfully");
 
