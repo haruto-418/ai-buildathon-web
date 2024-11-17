@@ -26,7 +26,12 @@ export function GenerateHandoverTableButton(props: Props) {
   async function onClickButton() {
     setSubmitting(true);
 
-    alert("");
+    if (process.env.NODE_ENV !== "development") {
+      alert(
+        "temporarily disabled because of the Timeout Error(limited by vercel). In local environment, it works fine! / vercelのタイムアウトエラーです。ローカル環境では問題なく動作します！",
+      );
+      return;
+    }
 
     console.log("Generate handover table, handoverId:", handoverId);
     const res = await fetch(
