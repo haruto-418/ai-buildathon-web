@@ -4,6 +4,7 @@ import {
   handoverSchema,
   localeSchema,
   outputSchema,
+  questionFromServerSchema,
   userSchema,
 } from "./schemas";
 
@@ -16,3 +17,5 @@ export type HandoverDocument = z.infer<typeof handoverDocumentSchema>;
 export type Output = z.infer<typeof outputSchema>;
 
 export type User = z.infer<typeof userSchema>;
+
+export type QuestionFromServer = z.infer<typeof questionFromServerSchema>;

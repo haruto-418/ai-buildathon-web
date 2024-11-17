@@ -1,5 +1,6 @@
 import CSVReader from "@/components/csv-reader";
-import { demo1Json } from "@/lib/data";
+import { Questions } from "@/components/questions";
+import { demo1Json, questionsJson } from "@/lib/data";
 import { fetchOutputByHandoverId } from "@/utils/interfaces/outputs/fetch";
 import { parseJsonIntoCsv } from "@/utils/parse-json-into-csv";
 
@@ -22,10 +23,9 @@ export default async function Page({ params }: Props) {
   console.log({ csvData });
 
   return (
-    <div>
+    <div className="flex flex-col gap-8">
       <CSVReader data={csvData} />
-      <h1>Handover {handoverId}</h1>
-      <p>Locale: {locale}</p>
+      <Questions questionsFromServer={questionsJson.questions} />
     </div>
   );
 }

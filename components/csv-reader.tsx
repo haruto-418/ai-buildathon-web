@@ -54,7 +54,7 @@ const CSVReader = (props: Props) => {
   }, [csvUrl]);
 
   return (
-    <div className="mx-auto bg-card p-4">
+    <div className="mx-auto w-full max-w-full overflow-x-auto bg-card p-4">
       {data.length > 0 ? (
         <Table>
           {/* ヘッダー行 */}

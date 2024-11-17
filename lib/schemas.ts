@@ -41,3 +41,8 @@ export const qAndASchema = z.object({
   answer: z.string().nullable().default(null),
   createdAt: z.union([z.string(), z.date()]).transform((val) => new Date(val)),
 });
+
+export const questionFromServerSchema = z.object({
+  question: z.string(),
+  reason: z.string(),
+});
