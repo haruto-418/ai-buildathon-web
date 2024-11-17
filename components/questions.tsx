@@ -1,6 +1,7 @@
 import { locales } from "@/lib/locales";
 import { localeSchema, questionFromServerSchema } from "@/lib/schemas";
 import { z } from "zod";
+import { QuestionAnswerForm } from "./question-answer-form";
 import {
   Table,
   TableBody,
@@ -13,10 +14,11 @@ import {
 const propsSchema = z.object({
   questionsFromServer: questionFromServerSchema.array(),
   locale: localeSchema,
+  handoverId: z.string(),
 });
 type Props = z.infer<typeof propsSchema>;
 export function Questions(props: Props) {
-  const { questionsFromServer, locale } = propsSchema.parse(props);
+  const { questionsFromServer, locale, handoverId } = propsSchema.parse(props);
 
   return (
     <div className="rounded-md bg-card p-4">
@@ -26,6 +28,7 @@ export function Questions(props: Props) {
             <TableHead />
             <TableHead>{locales[locale].question}</TableHead>
             <TableHead>{locales[locale].reason}</TableHead>
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -34,6 +37,13 @@ export function Questions(props: Props) {
               <TableCell></TableCell>
               <TableCell>{question.question}</TableCell>
               <TableCell>{question.reason}</TableCell>
+              <TableCell>
+                <QuestionAnswerForm
+                  handoverId={handoverId}
+                  questionFromServer={question}
+                  locale={locale}
+                />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

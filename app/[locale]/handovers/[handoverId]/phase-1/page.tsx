@@ -30,6 +30,7 @@ export default async function Page({ params }: Props) {
       <Questions
         questionsFromServer={questionsJson.questions}
         locale={locale}
+        handoverId={handoverId}
       />
     </div>
   );

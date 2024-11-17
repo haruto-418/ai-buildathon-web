@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const localesSchema = z.object({
+  answer: z.string(),
   question: z.string(),
   reason: z.string(),
   ifYouWantToWorkWithExistingHandover: z.string(),
@@ -45,6 +46,7 @@ export const localesSchema = z.object({
 export type Locales = z.infer<typeof localesSchema>;
 
 const _ja: Locales = {
+  answer: "回答",
   titleOfHandover: "引き継ぎタイトル",
   selectYourLanguage: "言語を選択してください",
   startHandOver: "引き継ぎを開始",
@@ -90,6 +92,7 @@ const _ja: Locales = {
 };
 
 const _en: Locales = {
+  answer: "Answer",
   titleOfHandover: "Title of Handover",
   selectYourLanguage: "Select your language",
   welcome: "Welcome!",

@@ -38,6 +38,7 @@ export const qAndASchema = z.object({
   id: z.string(),
   handoverId: z.string(),
   question: z.string(),
+  reason: z.string(),
   answer: z.string().nullable().default(null),
   createdAt: z.union([z.string(), z.date()]).transform((val) => new Date(val)),
 });
