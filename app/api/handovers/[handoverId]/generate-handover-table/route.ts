@@ -9,15 +9,9 @@ import { createOutput } from "@/utils/interfaces/outputs/create";
 const vertexAi = new VertexAI({
   project: "ai-buildathon-2024-actual",
   location: "us-central1",
-  // googleAuthOptions: {
-  //   credentials: {
-  //     apiKey: process.env.GCP_API_KEY,
-  //     projectId: process.env.GCP_PROJECT_ID,
-  //     client_email: process.env.GCP_CLIENT_EMAIL,
-  //     client_id: process.env.GCP_CLIENT_ID,
-  //     private_key: process.env.GCP_PRIVATE_KEY,
-  //   },
-  // },
+  googleAuthOptions: {
+    credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS || "{}"), // 明示的に渡す
+  },
 });
 
 function formatRequestBody(prompt: string) {
