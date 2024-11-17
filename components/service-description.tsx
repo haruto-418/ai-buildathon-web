@@ -51,13 +51,11 @@ export function ServiceDescription() {
   return (
     <div className="min-h-screen bg-gray-100 px-2 py-4 md:w-11/12 md:px-4 md:py-8">
       <header className="mb-10 text-center">
-        <h1 className="text-2xl font-bold">
-          業務をAIが完全に代替します / AI Fully Replaces Business Operations
-        </h1>
+        <h1 className="text-2xl font-bold">WIng.ai</h1>
         <div
           className={cn(
-            buttonVariants({}),
-            "mt-4 rounded-full bg-teal-500 px-8 py-6 text-lg font-bold text-white",
+            buttonVariants({ variant: "outline" }),
+            "mt-4 rounded-full border-teal-500 px-8 py-6 text-lg font-bold text-black",
           )}
         >
           <SignInButton />
