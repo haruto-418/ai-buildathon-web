@@ -55,6 +55,8 @@ export function HandoverDocumentForm(props: Props) {
       return;
     }
 
+    setUploadingFile(true);
+
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -124,7 +126,12 @@ export function HandoverDocumentForm(props: Props) {
           onChange={handleFileChange}
           disabled={uploadingFile}
         />
-        <Button type="button" onClick={onSubmit} disabled={uploadingFile}>
+        <Button
+          type="button"
+          onClick={onSubmit}
+          disabled={uploadingFile}
+          className={cn(uploadingFile && "cursor-not-allowed bg-gray-500")}
+        >
           {locales[locale].upload}
         </Button>
       </DialogContent>
