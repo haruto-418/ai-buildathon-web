@@ -34,10 +34,10 @@ export function Questions(props: Props) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {questionsFromServer.map((question) => (
+          {questionsFromServer.map((question, index) => (
             <TableRow key={question.question}>
               <TableCell>
-                <MdCheckCircle className="text-green-500" />
+                {index > 1 && <MdCheckCircle className="text-green-500" />}
               </TableCell>
               <TableCell>{question.question}</TableCell>
               <TableCell>{question.reason}</TableCell>
