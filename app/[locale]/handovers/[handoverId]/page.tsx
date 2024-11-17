@@ -1,4 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
+import Link from "next/link";
 import { z } from "zod";
 
 import { FilesTable } from "@/components/files-table";
@@ -11,14 +12,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
 import type { Handover, Locale } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { fetchHandover } from "@/utils/interfaces/handovers/fetch";
 import { fetchOutputByHandoverId } from "@/utils/interfaces/outputs/fetch";
 import { fetchUser } from "@/utils/interfaces/users/fetch";
-import Link from "next/link";
 
 const fetchDataSchema = z.object({
   handoverId: z.string(),
@@ -97,9 +99,14 @@ export default async function Page({ params }: Props) {
       <div>
         <h2 className="text-md font-bold">{locales[locale].handoverTable}</h2>
         {output?.handoverTableString ? (
-          <Link href={`/${locale}/handovers/${handoverId}/phase-1`}>
-            {locales[locale].handoverTable}
-          </Link>
+          <div className="flex justify-center">
+            <Link
+              href={`/${locale}/handovers/${handoverId}/phase-1`}
+              className={cn(buttonVariants({}), "rounded-full")}
+            >
+              {locales[locale].handoverTable}
+            </Link>
+          </div>
         ) : (
           <div className="flex justify-center bg-gray-50 py-8">
             <GenerateHandoverTableButton

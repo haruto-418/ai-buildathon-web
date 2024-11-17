@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 const propsSchema = z.object({
   handoverId: z.string(),
@@ -17,7 +18,11 @@ type Props = z.infer<typeof propsSchema>;
 export function GenerateHandoverTableButton(props: Props) {
   const { handoverId, clasName, locale } = propsSchema.parse(props);
 
+  const [submitting, setSubmitting] = useState<boolean>(false);
+
   async function onClickButton() {
+    setSubmitting(true);
+
     console.log("Generate handover table, handoverId:", handoverId);
     const res = await fetch(
       `/api/handovers/${handoverId}/generate-handover-table`,
@@ -39,11 +44,16 @@ export function GenerateHandoverTableButton(props: Props) {
 
     console.log("Handover table generated successfully");
 
+    setSubmitting(false);
     redirect(`/${locale}/handovers/${handoverId}/phase-1`);
   }
 
   return (
-    <Button className={cn("", clasName)} onClick={onClickButton}>
+    <Button
+      className={cn("", clasName)}
+      onClick={onClickButton}
+      disabled={submitting}
+    >
       {locales[locale].generateHandoverTable}
     </Button>
   );

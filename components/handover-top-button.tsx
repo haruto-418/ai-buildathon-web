@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { BsArrowReturnLeft } from "react-icons/bs";
 
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -11,18 +11,22 @@ import { cn } from "@/lib/utils";
 
 type Props = {
   className?: string;
+  handoverId: string;
   locale: Locale;
 };
 
-export function BackButton({ className, locale: _locale }: Props) {
+export function HandoverTopButton({
+  className,
+  locale: _locale,
+  handoverId,
+}: Props) {
   const locale = localeSchema.parse(_locale);
-  const router = useRouter();
 
   return (
     <Button
       onClick={() => {
         if (confirm(locales[locale].confirmBack)) {
-          router.back();
+          redirect(`/${locale}/handovers/${handoverId}`);
         }
       }}
       className={cn(
