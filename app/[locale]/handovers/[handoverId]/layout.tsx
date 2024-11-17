@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { BackButton } from "@/components/back-button";
 import { HandoverEditForm } from "@/components/handover-etid-form";
 import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
@@ -33,7 +34,10 @@ export default async function HandoverLayout({ children, params }: Props) {
   return (
     <div className="flex flex-col gap-10 md:gap-8">
       <div className="flex flex-col items-center justify-between gap-2 md:flex-row md:gap-0">
-        <h1 className="text-2xl font-bold">{`${locales[locale].titleOfHandover}: ${handover.title}`}</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-bold">{`${locales[locale].titleOfHandover}: ${handover.title}`}</h1>
+          <BackButton locale={locale} />
+        </div>
         <HandoverEditForm
           handover={handover}
           locale={locale}
