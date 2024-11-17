@@ -12,6 +12,7 @@
   "dependencies": {
     "@clerk/nextjs": "^6.3.1",
     "@formkit/tempo": "^0.1.2",
+    "@google-cloud/vertexai": "latest",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-dialog": "^1.1.2",
