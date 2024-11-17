@@ -1,5 +1,6 @@
 import { locales } from "@/lib/locales";
 import { localeSchema, questionFromServerSchema } from "@/lib/schemas";
+import { MdCheckCircle } from "react-icons/md";
 import { z } from "zod";
 import { QuestionAnswerForm } from "./question-answer-form";
 import {
@@ -34,7 +35,9 @@ export function Questions(props: Props) {
         <TableBody>
           {questionsFromServer.map((question) => (
             <TableRow key={question.question}>
-              <TableCell></TableCell>
+              <TableCell>
+                <MdCheckCircle className="text-green-500" />
+              </TableCell>
               <TableCell>{question.question}</TableCell>
               <TableCell>{question.reason}</TableCell>
               <TableCell>
