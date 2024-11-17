@@ -1,4 +1,5 @@
-import { questionFromServerSchema } from "@/lib/schemas";
+import { locales } from "@/lib/locales";
+import { localeSchema, questionFromServerSchema } from "@/lib/schemas";
 import { z } from "zod";
 import {
   Table,
@@ -11,10 +12,11 @@ import {
 
 const propsSchema = z.object({
   questionsFromServer: questionFromServerSchema.array(),
+  locale: localeSchema,
 });
 type Props = z.infer<typeof propsSchema>;
 export function Questions(props: Props) {
-  const { questionsFromServer } = propsSchema.parse(props);
+  const { questionsFromServer, locale } = propsSchema.parse(props);
 
   return (
     <div className="rounded-md bg-card p-4">
@@ -22,8 +24,8 @@ export function Questions(props: Props) {
         <TableHeader>
           <TableRow>
             <TableHead />
-            <TableHead>question</TableHead>
-            <TableHead>reason</TableHead>
+            <TableHead>{locales[locale].question}</TableHead>
+            <TableHead>{locales[locale].reason}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
