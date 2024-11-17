@@ -1,7 +1,10 @@
-import { VertexAI } from "@google-cloud/vertexai";
+import { GenerateContentResult, VertexAI } from "@google-cloud/vertexai";
 import { NextResponse } from "next/server";
 
+import { outputSchema } from "@/lib/schemas";
+import type { Output } from "@/lib/types";
 import { generateHandoverTablePrompt } from "@/utils/interfaces/generate-handover-table-prompt";
+import { createOutput } from "@/utils/interfaces/outputs/create";
 
 const vertexAi = new VertexAI({
   project: "ai-buildathon-2024-actual",
@@ -106,10 +109,37 @@ export async function POST(
   };
 
   try {
-    const response = await generativeModel.generateContent(req as any);
+    console.log("Generating content...");
+    const response: GenerateContentResult =
+      await generativeModel.generateContent(req as any);
     console.log(response);
+    const data = response.response.candidates;
+    const content = data?.map((part) => part.content);
+    const parts = content?.map((part) => part.parts);
+    const text = parts?.map((part) => part[0].text);
 
-    return NextResponse.json(response);
+    if (!text) {
+      console.error("Failed to generate content");
+      return NextResponse.json(
+        { error: "Failed to generate content" },
+        { status: 500 },
+      );
+    }
+
+    const _output: Partial<Output> = {
+      id: "",
+      handoverId,
+      handoverTableString: text[0],
+      createdAt: new Date(),
+    };
+    const output = outputSchema.parse(_output);
+    await createOutput({
+      output,
+    });
+
+    console.log("Content generated successfully");
+
+    return NextResponse.json({ data: text[0] });
   } catch (error) {
     console.error("Error generating content:", error);
     return NextResponse.json(

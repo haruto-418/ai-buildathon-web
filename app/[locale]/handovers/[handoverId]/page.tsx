@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 
-import CSVReader from "@/components/csv-reader";
 import { FilesTable } from "@/components/files-table";
 import { GenerateHandoverTableButton } from "@/components/generate-handover-table-button";
 import { HandoverDocumentForm } from "@/components/handover-document-form";
@@ -19,6 +18,7 @@ import type { Handover, Locale } from "@/lib/types";
 import { fetchHandover } from "@/utils/interfaces/handovers/fetch";
 import { fetchOutputByHandoverId } from "@/utils/interfaces/outputs/fetch";
 import { fetchUser } from "@/utils/interfaces/users/fetch";
+import Link from "next/link";
 
 const fetchDataSchema = z.object({
   handoverId: z.string(),
@@ -96,8 +96,10 @@ export default async function Page({ params }: Props) {
       </div>
       <div>
         <h2 className="text-md font-bold">{locales[locale].handoverTable}</h2>
-        {output?.csvUrl ? (
-          <CSVReader csvUrl={output.csvUrl} />
+        {output?.handoverTableString ? (
+          <Link href={`/${locale}/handovers/${handoverId}/phase-1`}>
+            {locales[locale].handoverTable}
+          </Link>
         ) : (
           <div className="flex justify-center bg-gray-50 py-8">
             <GenerateHandoverTableButton

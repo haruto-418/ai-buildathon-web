@@ -30,7 +30,7 @@ export const handoverSchema = z.object({
 export const outputSchema = z.object({
   id: z.string(),
   handoverId: z.string(),
-  csvUrl: z.string().nullable().default(null),
+  handoverTableString: z.string(),
   createdAt: z.union([z.string(), z.date()]).transform((val) => new Date(val)),
 });
 
