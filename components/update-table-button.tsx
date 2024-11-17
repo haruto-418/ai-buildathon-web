@@ -23,6 +23,11 @@ export function UpdateTableButton(props: Props) {
         "shadow-xl",
         "border border-gray-400",
       )}
+      onClick={() => {
+        if (process.env.NODE_ENV !== "development") {
+          alert("This is under development / 現在実装中です");
+        }
+      }}
     >
       {locales[locale].updateTableBasedOnAnswers}
     </Button>
