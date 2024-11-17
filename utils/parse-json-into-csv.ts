@@ -6,7 +6,6 @@ const parseJsonIntoCsvSchema = z.object({
 type ParseJsonIntoCsv = z.infer<typeof parseJsonIntoCsvSchema>;
 export function parseJsonIntoCsv(args: ParseJsonIntoCsv) {
   const { json: jsonArray } = parseJsonIntoCsvSchema.parse(args);
-  console.log(jsonArray);
 
   // JSONをオブジェクトにパース
   const jsonObject =
