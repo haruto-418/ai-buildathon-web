@@ -51,7 +51,7 @@ export function ServiceDescription() {
   return (
     <div className="min-h-screen bg-gray-100 px-2 py-4 md:w-11/12 md:px-4 md:py-8">
       <header className="mb-10 text-center">
-        <h1 className="text-2xl font-bold">WIng.ai</h1>
+        <h1 className="text-2xl font-bold">wIng.ai</h1>
         <div
           className={cn(
             buttonVariants({ variant: "outline" }),
