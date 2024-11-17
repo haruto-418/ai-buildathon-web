@@ -5,7 +5,6 @@ import CSVReader from "@/components/csv-reader";
 import { FilesTable } from "@/components/files-table";
 import { GenerateHandoverTableButton } from "@/components/generate-handover-table-button";
 import { HandoverDocumentForm } from "@/components/handover-document-form";
-import { HandoverEditForm } from "@/components/handover-etid-form";
 import { SuccessorForm } from "@/components/successor-form";
 import {
   Accordion,
@@ -62,14 +61,6 @@ export default async function Page({ params }: Props) {
 
   return (
     <div className="flex flex-col gap-10 md:gap-8">
-      <div className="flex flex-col items-center justify-between gap-2 md:flex-row md:gap-0">
-        <h1 className="text-2xl font-bold">{`${locales[locale].titleOfHandover}: ${handover.title}`}</h1>
-        <HandoverEditForm
-          handover={handover}
-          locale={locale}
-          className="w-4/6 md:w-fit"
-        />
-      </div>
       <Card>
         <CardContent className="p-4">
           <p>{`${locales[locale].predecessor}: ${user.firstName} ${user.lastName}`}</p>
