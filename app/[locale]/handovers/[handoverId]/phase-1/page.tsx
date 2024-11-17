@@ -1,7 +1,7 @@
 import CSVReader from "@/components/csv-reader";
 import { Questions } from "@/components/questions";
 import { UpdateTableButton } from "@/components/update-table-button";
-import { questionsJson } from "@/lib/data";
+import { demo1Json, questionsJson } from "@/lib/data";
 import { locales } from "@/lib/locales";
 import { localeSchema } from "@/lib/schemas";
 import { fetchOutputByHandoverId } from "@/utils/interfaces/outputs/fetch";
@@ -21,9 +21,10 @@ export default async function Page({ params }: Props) {
   const locale = localeSchema.parse(_locale);
 
   const { output } = await fetchData({ handoverId });
+  console.log("output", output);
 
   const csvData = parseJsonIntoCsv({
-    json: output.handoverTableString,
+    json: JSON.stringify(demo1Json), // NOTE: 開発中のため一時的にこれ
   });
 
   return (

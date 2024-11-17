@@ -32,6 +32,7 @@ export function GenerateHandoverTableButton(props: Props) {
       );
       // return;
     }
+    redirect(`/${locale}/handovers/${handoverId}/phase-1`);
 
     console.log("Generate handover table, handoverId:", handoverId);
     const res = await fetch(
